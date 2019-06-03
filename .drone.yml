@@ -1,0 +1,13 @@
+kind: pipeline
+name: default
+
+steps:
+- name: docker  
+  image: plugins/docker
+  settings:
+    username: brad
+    password:
+      from_secret: registry_pw
+    tags: ${DRONE_COMMIT_BRANCH}
+    repo: registry.fyvm.org/brad/raas
+    registry: registry.fyvm.org
