@@ -10,6 +10,6 @@ RUN cpanm AVAR/Hailo-0.75.tar.gz
 # merge this into the previous layer later on
 RUN cpanm BPS/HTTP-Server-Simple-0.52.tar.gz
 
-RUN mkdir /app
+ADD app /app
 
-CMD ["echo", "Made it to the CMD part!"]
+CMD ["perl", "/app/test-server.pl"]
