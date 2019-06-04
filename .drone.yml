@@ -15,7 +15,6 @@ steps:
       from_secret: registry_pw
   commands:
     - docker login -u $registry_username -p $registry_password registry.fyvm.org
-    # - apk add git
     - docker build -t registry.fyvm.org/brad/$DRONE_REPO_NAME:$DRONE_COMMIT_BRANCH .
     - docker push registry.fyvm.org/brad/$DRONE_REPO_NAME:$DRONE_COMMIT_BRANCH
   volumes:
