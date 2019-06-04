@@ -3,7 +3,7 @@ name: default
 
 steps:
 - name: docker  
-  image: 18.09.6-dind
+  image: docker:18.09.6-dind
   privileged: true
   environment:
     DOCKER_LAUNCH_DEBUG:
