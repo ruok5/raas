@@ -12,4 +12,6 @@ RUN cpanm BPS/HTTP-Server-Simple-0.52.tar.gz
 
 ADD app /app
 
+RUN echo "hello world"
+
 CMD ["/usr/local/bin/perl", "/app/test-server.pl"]
