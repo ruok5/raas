@@ -3,12 +3,26 @@ name: default
 
 steps:
 - name: docker  
-  image: plugins/docker
-  settings:
-    username: brad
-    password:
+  image: 18.09.6-dind
+  privileged: true
+  environment:
+    DOCKER_LAUNCH_DEBUG:
+      true
+    DOCKER_HOST:
+      unix:///var/run/host.sock
+    registry_username: brad
+    registry_password:
       from_secret: registry_pw
-    tags: ${DRONE_COMMIT_BRANCH}
-    repo: registry.fyvm.org/brad/raas
-    registry: registry.fyvm.org
-    purge: false
+  commands:
+    - docker login -u $registry_username -p $registry_password registry.fyvm.org
+    - apk add git
+    - docker build -t registry.fyvm.org/brad/$DRONE_REPO_NAME:$DRONE_COMMIT_BRANCH .
+    - docker push registry.fyvm.org/brad/$DRONE_REPO_NAME:$DRONE_COMMIT_BRANCH
+  volumes:
+    - name: host-docker-sock
+      path: /var/run/host.sock
+
+volumes:
+- name: host-docker-sock
+  host:
+    path: /var/run/docker.sock
