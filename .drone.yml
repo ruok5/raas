@@ -2,27 +2,27 @@ kind: pipeline
 name: default
 
 steps:
-- name: docker  
+- name: docker
   image: docker:18.09.6-dind
   privileged: true
   environment:
-    DOCKER_LAUNCH_DEBUG:
-      true
-    DOCKER_HOST:
-      unix:///var/run/host.sock
-    registry_username: brad
-    registry_password:
+    DOCKER_LAUNCH_DEBUG: true
+    DOCKER_HOST: unix:///var/run/host.sock
+    reg_addr: registry.fyvm.org
+    reg_username: brad
+    reg_password:
       from_secret: registry_pw
   commands:
-    - docker login -u $registry_username -p $registry_password registry.fyvm.org
-    - docker build -t registry.fyvm.org/brad/$DRONE_REPO_NAME:$DRONE_COMMIT_BRANCH .
-    - docker push registry.fyvm.org/brad/$DRONE_REPO_NAME:$DRONE_COMMIT_BRANCH
+    - export image_tag=$reg_addr/$DRONE_REPO_NAMESPACE/$DRONE_REPO_NAME:$DRONE_COMMIT_BRANCH
+    - docker login -u $reg_username -p $reg_password $reg_addr
+    - docker build -t $image_tag .
+    - docker push $image_tag
     - /usr/bin/env
   volumes:
-    - name: host-docker-sock
+    - name: host-docker-socket
       path: /var/run/host.sock
 
 volumes:
-- name: host-docker-sock
+- name: host-docker-socket
   host:
     path: /var/run/docker.sock
