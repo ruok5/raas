@@ -17,7 +17,6 @@ steps:
     - docker login -u $reg_username -p $reg_password $reg_addr
     - docker build -t $image_tag .
     - docker push $image_tag
-    - /usr/bin/env
   volumes:
     - name: host-docker-socket
       path: /var/run/host.sock
