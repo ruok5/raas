@@ -6,12 +6,12 @@ use warnings;
 {
 package RevaApi;
  
-use HTTP::Server::Simple::CGI;
+use HTTP::Server::Simple::cgi;
 use base qw(HTTP::Server::Simple::CGI);
  
 my %dispatch = (
     '/api/v1/reply' => \&resp_reply,
-    '/api/v1/reply' => \&resp_train,
+    '/api/v1/train' => \&resp_train,
     '/api/v1/stats' => \&resp_stats
 );
  
@@ -54,7 +54,7 @@ sub resp_train {
 }
 
 sub resp_stats {
-  # body...
+  print ".\n";
 }
  
 } 
