@@ -12,4 +12,4 @@ RUN cpanm BPS/HTTP-Server-Simple-0.52.tar.gz
 
 ADD app /app
 
-CMD ["/usr/local/bin/perl", "/app/test-server.pl"]
+CMD ["/usr/local/bin/perl", "/app/reva-server.pl"]
