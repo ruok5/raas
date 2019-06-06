@@ -1,4 +1,8 @@
 #!/usr/bin/perl
+
+use strict;
+use warnings;
+
 {
 package RevaApi;
  
@@ -37,7 +41,7 @@ sub resp_reply {
      
     my $query_string = $cgi->param('q');
 
-    my $bot_response = `/usr/local/bin/hailo --brain /app/db/reva.sqlite -r $query_string`
+    my $bot_response = `/usr/local/bin/hailo --brain /app/db/reva.sqlite -r $query_string`;
      
     print $cgi->header,
           $cgi->start_html("Hello"),
