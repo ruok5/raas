@@ -36,14 +36,16 @@ sub resp_hello {
      
     my $who = $cgi->param('name');
      
-    print $cgi->header,
+    print $cgi->header(-charset => 'UTF-8'),
           $cgi->start_html("Hello"),
           $cgi->h1("Hello $who!"),
           $cgi->end_html;
 }
  
 } 
- 
+
+binmode STDOUT, ":utf8";
+
 # start the server on port 3000
-my $pid = MyWebServer->new(3000)->background();
-print "Use 'kill $pid' to stop server.\n";
+print "Starting server... press ^C to exit...\n";
+my $pid = MyWebServer->new(3000)->run();
