@@ -60,5 +60,5 @@ sub resp_stats {
 } 
  
 # start the server on port 3000
-my $pid = RevaApi->new(3000)->background();
+my $pid = RevaApi->new(3000)->run();
 print "Use 'kill $pid' to stop server.\n";
