@@ -45,5 +45,5 @@ sub resp_hello {
 } 
  
 # start the server on port 3000
-my $pid = MyWebServer->new(3000)->background();
-print "Use 'kill $pid' to stop server.\n";
+print "Starting server... press ^C to exit..."
+my $pid = MyWebServer->new(3000);
