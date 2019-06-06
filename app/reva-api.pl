@@ -41,7 +41,13 @@ sub resp_reply {
      
     my $query_string = $cgi->param('q');
 
-    my $bot_response = `/usr/local/bin/hailo --brain /app/db/reva.sqlite -r $query_string`;
+    my $mode = "R";
+
+    if ($query_string =~ /\w+/) {
+      $mode = "r";
+    }
+
+    my $bot_response = `/usr/local/bin/hailo --brain /app/db/reva.sqlite -$mode $query_string`;
      
     print $cgi->header,
           $cgi->start_html("Hello"),
