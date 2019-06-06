@@ -46,4 +46,4 @@ sub resp_hello {
  
 # start the server on port 3000
 print "Starting server... press ^C to exit...\n";
-my $pid = MyWebServer->new(3000);
+my $pid = MyWebServer->new(3000)->run;
