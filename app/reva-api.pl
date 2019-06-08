@@ -52,7 +52,7 @@ sub resp_reply {
     print $cgi->header,
           $cgi->start_html();
 
-    print qq(<br><form action="/api/v1/reply" method="get"><input type="text" name="lastname">\n);
+    print qq(<br><form action="/api/v1/reply" method="get"><input type="text" name="q" autofocus>\n);
      
     print $cgi->h1("$bot_response"),
           $cgi->end_html;

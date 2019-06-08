@@ -16,22 +16,28 @@ image_tag="$git_repo_name:$git_repo_branch"
 docker build -t "$image_tag" "$git_repo_base_dir"
 
 docker stop "$container_name"
+docker rm "$container_name"
 
 random_port=$(ruby -rsocket -e"puts TCPServer.new(0).addr[1]")
 docker run -d \
   --name "$container_name" \
   -p $random_port:$container_port \
   -v $git_repo_base_dir/app/db:/app/db \
-  $image_tag bash
+  $image_tag
 
 # echo -e "\n\n  The server should be available at http://localhost:$random_port"
 # echo -e "                                    http://localhost:$random_port/api/v1/reply\n\n"
+
+open "http://localhost:$random_port/api/v1/reply"
 
 subl -s - <<EOF
 
   The server should be available at http://localhost:$random_port
                                     http://localhost:$random_port/api/v1/reply
 
+  CLOSE THIS FILE TO STOP THE SERVER AND DESTROY THE CONTAINER!
+
 EOF
 
 docker stop "$container_name"
+docker rm "$container_name"
