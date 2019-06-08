@@ -5,6 +5,7 @@
 #
 
 container_port=3000
+container_name="raas-dev"
 
 git_repo_base_dir=$(git rev-parse --show-toplevel)
 git_repo_name=$(basename "$git_repo_base_dir")
@@ -15,6 +16,6 @@ image_tag="$git_repo_name:$git_repo_branch"
 docker build -t "$image_tag" "$git_repo_base_dir"
 
 random_port=$(ruby -rsocket -e"puts TCPServer.new(0).addr[1]")
-docker run -d --rm -p $random_port:$container_port $image_tag
+docker run -d --rm -n "$container_name" -p $random_port:$container_port $image_tag
 
 echo -e "\n\n  The server should be available at http://localhost:$random_port\n\n"
