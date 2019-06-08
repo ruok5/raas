@@ -10,6 +10,9 @@ RUN cpanm AVAR/Hailo-0.75.tar.gz
 # merge this into the previous layer later on
 RUN cpanm BPS/HTTP-Server-Simple-0.52.tar.gz
 
+RUN cpanm JSON
+RUN cpanm CGI::Log
+
 ADD app /app
 
 CMD ["/usr/local/bin/perl", "/app/reva-api.pl"]

@@ -28,12 +28,13 @@ docker run -d \
 # echo -e "\n\n  The server should be available at http://localhost:$random_port"
 # echo -e "                                    http://localhost:$random_port/api/v1/reply\n\n"
 
-open "http://localhost:$random_port/api/v1/reply"
+open "http://localhost:$random_port/live/reply"
 
 subl -s - <<EOF
 
   The server should be available at http://localhost:$random_port
                                     http://localhost:$random_port/api/v1/reply
+                                    http://localhost:$random_port/live/reply?q=%28%28%28
 
   CLOSE THIS FILE TO STOP THE SERVER AND DESTROY THE CONTAINER!
 

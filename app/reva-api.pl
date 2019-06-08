@@ -8,12 +8,41 @@ package RevaApi;
  
 use HTTP::Server::Simple::CGI;
 use base qw(HTTP::Server::Simple::CGI);
+use Encode;
+use JSON;
+use CGI::Log;
  
 my %dispatch = (
-    '/api/v1/reply' => \&resp_reply,
-    '/api/v1/train' => \&resp_train,
-    '/api/v1/stats' => \&resp_stats
+    '/live/reply' => \&resp_live_reply,
+    '/api/v1/reply' => \&resp_api_reply,
+    '/api/v1/train' => \&resp_api_train,
+    '/api/v1/stats' => \&resp_api_stats
 );
+
+sub get_data {
+  my $query = shift;
+
+  unless (defined($query)) {
+    $query = "";
+  }
+
+  # random reply mode will be default
+  my $mode = "R";
+
+  # strip leading and trailing whitespace
+  $query =~ s/^\s+|\s+$//g;
+
+  # reply to query if we have one
+  unless ($query eq "") {
+    $mode = "r";
+  }
+
+  my $bot_response = qx{/usr/local/bin/hailo --brain /app/db/reva.sqlite -$mode '$query'};
+
+  Log->status("query contains $query");
+
+  return $bot_response;
+}
  
 sub handle_request {
     my $self = shift;
@@ -35,39 +64,34 @@ sub handle_request {
     }
 }
  
-sub resp_reply {
+sub resp_live_reply {
     my $cgi  = shift;   # CGI.pm object
     return if !ref $cgi;
      
-    my $query_string = $cgi->param('q');
-
-    my $mode = "R";
-
-    if ($query_string =~ /\w+/) {
-      $mode = "r";
-    }
-
-    my $bot_response = `/usr/local/bin/hailo --brain /app/db/reva.sqlite -$mode $query_string`;
+    my $query_string = decode utf8=>$cgi->param('q');
      
     print $cgi->header,
           $cgi->start_html();
 
-    print qq(<br><form action="/api/v1/reply" method="get"><input type="text" name="q" autofocus>\n);
+    print qq(<br><form action="/live/reply" method="get"><input type="text" name="q" autofocus>\n);
      
-    print $cgi->h1("$bot_response"),
+    print $cgi->h1(get_data($query_string)),
           $cgi->end_html;
 }
 
-sub resp_train {
+sub resp_api_reply {
   # body...
 }
 
-sub resp_stats {
-  print ".\n";
+sub resp_api_train {
+  # body...
+}
+
+sub resp_api_stats {
+  # body...
 }
  
 } 
  
-# start the server on port 3000
+# start the server in the foreground on port 3000
 my $pid = RevaApi->new(3000)->run();
-print "Use 'kill $pid' to stop server.\n";
