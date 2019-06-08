@@ -15,7 +15,23 @@ image_tag="$git_repo_name:$git_repo_branch"
 
 docker build -t "$image_tag" "$git_repo_base_dir"
 
-random_port=$(ruby -rsocket -e"puts TCPServer.new(0).addr[1]")
-docker run -d --rm -n "$container_name" -p $random_port:$container_port $image_tag
+docker stop "$container_name"
 
-echo -e "\n\n  The server should be available at http://localhost:$random_port\n\n"
+random_port=$(ruby -rsocket -e"puts TCPServer.new(0).addr[1]")
+docker run -d \
+  --name "$container_name" \
+  -p $random_port:$container_port \
+  -v $git_repo_base_dir/app/db:/app/db \
+  $image_tag bash
+
+# echo -e "\n\n  The server should be available at http://localhost:$random_port"
+# echo -e "                                    http://localhost:$random_port/api/v1/reply\n\n"
+
+subl -s - <<EOF
+
+  The server should be available at http://localhost:$random_port
+                                    http://localhost:$random_port/api/v1/reply
+
+EOF
+
+docker stop "$container_name"

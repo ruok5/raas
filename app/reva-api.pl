@@ -50,8 +50,11 @@ sub resp_reply {
     my $bot_response = `/usr/local/bin/hailo --brain /app/db/reva.sqlite -$mode $query_string`;
      
     print $cgi->header,
-          $cgi->start_html("Hello"),
-          $cgi->h1("$bot_response"),
+          $cgi->start_html();
+
+    print qq(<br><form action="/api/v1/reply" method="get"><input type="text" name="lastname">\n);
+     
+    print $cgi->h1("$bot_response"),
           $cgi->end_html;
 }
 
