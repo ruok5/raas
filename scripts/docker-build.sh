@@ -28,7 +28,7 @@ docker run -d \
 # echo -e "\n\n  The server should be available at http://localhost:$random_port"
 # echo -e "                                    http://localhost:$random_port/api/v1/reply\n\n"
 
-open "http://localhost:$random_port/live/reply"
+# open "http://localhost:$random_port/live/reply"
 
 subl -s - <<EOF
 
@@ -40,5 +40,9 @@ subl -s - <<EOF
 
 EOF
 
+echo "Stoping $container_name..."
 docker stop "$container_name"
+echo "...done."
+echo "Removing $container_name..."
 docker rm "$container_name"
+echo "...done."
