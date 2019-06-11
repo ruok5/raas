@@ -4,7 +4,7 @@
 # Run this image (ephemerally) locally, and show the app's URL
 #
 
-container_port=3000
+container_port=4567
 container_name="raas-dev"
 
 git_repo_base_dir=$(git rev-parse --show-toplevel)
@@ -40,7 +40,7 @@ subl -s - <<EOF
 
 EOF
 
-echo "Stoping $container_name..."
+echo "Stopping $container_name..."
 docker stop "$container_name"
 echo "...done."
 echo "Removing $container_name..."
