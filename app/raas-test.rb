@@ -1,5 +1,6 @@
 # require 'mixlib/shellout'
 require 'sinatra'
+require 'json'
 
 # reply = Mixlib::ShellOut.new("hailo -b /app/db/reva.sqlite -R")
 # random_reply = Mixlib::ShellOut.new("hailo -b /app/db/reva.sqlite -R")
@@ -17,28 +18,33 @@ def random_reply
   `hailo -b /app/db/reva.sqlite -R`
 end
 
+def str_to_json(str)
+  output = { data: str }
+  output.to_json
+end
+
 set :bind, "0.0.0.0"
 
 get '/' do
   'Hello world!'
 end
 
-get '/api/vi/reply' do
+get '/api/v1/reply' do
   if params['q']
-    reply(params['q'])
+    str_to_json reply(params['q'])
   else
     "q not found"
   end
 end
 
-get '/api/vi/learn' do
+get '/api/v1/learn' do
   if params['q']
-    learn(params['q'])
+    str_to_json learn(params['q'])
   else
     "q not found"
   end
 end
 
-get '/api/vi/random' do
-  random_reply(params['q'])
+get '/api/v1/random' do
+  str_to_json random_reply
 end
