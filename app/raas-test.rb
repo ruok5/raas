@@ -19,7 +19,7 @@ def random_reply
 end
 
 def str_to_json(str)
-  output = { data: str }
+  output = { data: str.chomp }
   output.to_json
 end
 
