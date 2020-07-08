@@ -6,6 +6,8 @@ require 'json'
 # random_reply = Mixlib::ShellOut.new("hailo -b /app/db/reva.sqlite -R")
 # learn = Mixlib::ShellOut.new("hailo -b /app/db/reva.sqlite -L")
 
+Encoding.default_external = "UTF-8"
+
 def reply(query)
   `hailo -b /app/db/reva.sqlite -r "#{query}"`
 end
