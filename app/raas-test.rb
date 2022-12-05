@@ -9,15 +9,15 @@ require 'json'
 Encoding.default_external = "UTF-8"
 
 def reply(query)
-  `hailo -b /app/db/reva.sqlite -r "#{query}"`
+  `hailo -b /app/db/reva.sqlite -r "#{query}"`.force_encoding("utf-8")
 end
 
 def learn(query)
-  `hailo -b /app/db/reva.sqlite -L "#{query}"`
+  `hailo -b /app/db/reva.sqlite -L "#{query}"`.force_encoding("utf-8")
 end
 
 def random_reply
-  `hailo -b /app/db/reva.sqlite -R`
+  `hailo -b /app/db/reva.sqlite -R`.force_encoding("utf-8")
 end
 
 def str_to_json(str)
