@@ -5,7 +5,7 @@ MAINTAINER brad@fyvm.org
 # this layer is expensive when building.
 # leave it alone for now so we don't have to redo it.
 # other cpanm steps can be combined once we stabilize the cpan deps.
-RUN cpanm AVAR/Hailo-0.75.tar.gz
+RUN cpanm --notest AVAR/Hailo-0.75.tar.gz
 
 # ruby environment
 RUN useradd -ms /bin/sh ruby && echo "ruby\nruby" | passwd ruby
