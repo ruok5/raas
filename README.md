@@ -1,3 +1,5 @@
+[![Build Status](https://drone.fyvm.org/api/badges/ruok5/raas/status.svg?ref=refs/heads/develop)](https://drone.fyvm.org/ruok5/raas)
+
 # Reva as a Service, aka RaaS
 
 ## Why?
