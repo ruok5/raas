@@ -10,11 +10,8 @@ steps:
     DOCKER_HOST: unix:///var/run/host.sock
     reg_addr: registry.fyvm.org
     reg_username: brad
-    reg_password:
-      from_secret: registry_pw
   commands:
     - export image_tag=$reg_addr/$DRONE_REPO_NAMESPACE/$DRONE_REPO_NAME:$DRONE_COMMIT_BRANCH
-    - docker login -u $reg_username -p $reg_password $reg_addr
     - docker build -t $image_tag .
     - docker push $image_tag
   volumes:
