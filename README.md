@@ -12,15 +12,15 @@ You tell me. Is there something more than initializing a git repo?
 
 For now, [the bot is operated](https://metacpan.org/pod/distribution/Hailo/bin/hailo) like so:
 
-###Getting a random reply
+### Getting a random reply
 ```
 hailo -b /app/db/reva.sqlite -R
 ```
-###Getting a reply to `STRING`
+### Getting a reply to `STRING`
 ```
 hailo -b /app/db/reva.sqlite -r STRING
 ```
-###Allow learning and get a reply to `STRING`
+### Allow learning and get a reply to `STRING`
 ```
 hailo -b /app/db/reva.sqlite -L STRING
 ```
